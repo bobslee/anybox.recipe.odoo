@@ -261,6 +261,11 @@ class BaseRecipe(object):
         self.config_path = join(self.etc, self.name + '.cfg')
 
         self.default_admin_passwd = options.get('default_admin_passwd', '')
+
+        self.preserve_admin_passwd = options.get('preserve_admin_passwd', 'False') == 'True'
+        if self.preserve_admin_passwd:
+            self.prev_config_path = '{config_path}.prev'.format(config_path=self.config_path)
+        
         for d in self.downloads_dir, self.etc:
             if not os.path.exists(d):
                 logger.info('Created %s/ directory' % basename(d))
