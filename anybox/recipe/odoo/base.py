@@ -1161,6 +1161,8 @@ class BaseRecipe(object):
         # modify the config file according to recipe options
         config = RawConfigParser()
         config.read(self.config_path)
+        import pdb
+        pdb.set_trace()
         for recipe_option in self.options:
             if '.' not in recipe_option:
                 continue
