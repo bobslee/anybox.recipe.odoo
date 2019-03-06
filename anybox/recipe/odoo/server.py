@@ -124,6 +124,7 @@ class ServerRecipe(BaseRecipe):
                 matches = re.findall(pattern_admin_passwd, fdata)
                 if len(matches) == 1:
                     preserve_admin_pass = matches[0].strip()
+                    break
                 else:
                     msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                     raise UserError(msg)
