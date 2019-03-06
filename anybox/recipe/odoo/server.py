@@ -129,6 +129,8 @@ class ServerRecipe(BaseRecipe):
                     msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                     raise UserError(msg)
 
+            import pdb
+            pdb.set_trace()
             if preserve_admin_passwd:
                 for line in fileinput.input(self.config_path, inplace=True):
                     if re.match(pattern_admin_passwd, line):
