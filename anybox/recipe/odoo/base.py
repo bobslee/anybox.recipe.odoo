@@ -1161,17 +1161,28 @@ class BaseRecipe(object):
         # modify the config file according to recipe options
         config = RawConfigParser()
         config.read(self.config_path)
-        import pdb
-        pdb.set_trace()
+
         for recipe_option in self.options:
             if '.' not in recipe_option:
                 continue
             section, option = recipe_option.split('.', 1)
-            # if self.preserve_admin_passwd and option == 'admin_passwd':
-            #     continue
-            # else:
             conf_ensure_section(config, section)
-            config.set(section, option, self.options[recipe_option])
+            if option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
+                pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
+                preserve_admin_passwd = False
+
+                with open(self.prev_config_path, 'r') as f:
+                    fdata = f.read()
+                    matches = re.findall(pattern_admin_passwd, fdata)
+                    if len(matches) == 1:
+                        preserve_admin_pass = matches[0].strip()
+                    else:
+                        msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
+                        raise UserError(msg)
+                if preserve_admin_passwd:
+                    config.set(section, option, preserve_admin_passwd)
+            else:
+                config.set(section, option, self.options[recipe_option])
         with open(self.config_path, 'w') as configfile:
             config.write(configfile)
 
