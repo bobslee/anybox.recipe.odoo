@@ -109,6 +109,8 @@ class ServerRecipe(BaseRecipe):
             from openerp.tools.config import configmanager
 
         if self.preserve_admin_passwd and os.path.exists(self.config_path):
+            import pdb
+            pdb.set_trace()
             shutil.copyfile(self.config_path, self.prev_config_path)
 
         configmanager(self.config_path).save()
