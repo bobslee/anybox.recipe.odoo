@@ -1151,7 +1151,7 @@ class BaseRecipe(object):
 
         # create the config file
         if os.path.exists(self.config_path):
-            if self.self.prev_config_path:
+            if self.prev_config_path:
                 shutil.copyfile(self.config_path, self.prev_config_path)
             os.remove(self.config_path)
         logger.info('Creating config file: %s',
