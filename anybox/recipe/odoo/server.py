@@ -2,6 +2,8 @@
 import os
 from os.path import join
 import sys
+import re
+import fileinput
 import shutil
 import logging
 import zc.buildout
