@@ -101,6 +101,7 @@ class ServerRecipe(BaseRecipe):
     def _create_default_config(self):
         """Have Odoo generate its default config file.
         """
+        shutil.copyfile(self.config_path, self.prev_config_path)
         if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.config_path):
             shutil.copyfile(self.config_path, self.prev_config_path)
 
