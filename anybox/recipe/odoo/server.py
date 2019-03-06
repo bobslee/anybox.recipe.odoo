@@ -110,10 +110,10 @@ class ServerRecipe(BaseRecipe):
         except ImportError:
             from openerp.tools.config import configmanager
 
-        configmanager(self.config_path).save()
-
         if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.config_path):
             shutil.copyfile(self.config_path, self.prev_config_path)
+
+        configmanager(self.config_path).save()
 
         if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
             pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
