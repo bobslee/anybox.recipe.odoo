@@ -1171,6 +1171,12 @@ class BaseRecipe(object):
             # if option == 'admin_passwd':
             #     import pdb
             #     pdb.set_trace()
+            logger.critical('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+            logger.critical(option)
+            logger.critical(self.preserve_admin_passwd)
+            logger.critical(self.prev_config_path)
+            logger.critical(os.path.exists(self.prev_config_path))
+            
             if option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
                 pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
                 preserve_admin_passwd = False
