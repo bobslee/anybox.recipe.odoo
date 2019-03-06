@@ -101,6 +101,9 @@ class ServerRecipe(BaseRecipe):
     def _create_default_config(self):
         """Have Odoo generate its default config file.
         """
+        if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.config_path):
+            shutil.copyfile(self.config_path, self.prev_config_path)
+
         self.options.setdefault('options.admin_passwd', self.default_admin_passwd)
         sys.path.append(self.odoo_dir)
         sys.path.extend([egg.location for egg in self.ws])
@@ -109,9 +112,6 @@ class ServerRecipe(BaseRecipe):
             from odoo.tools.config import configmanager
         except ImportError:
             from openerp.tools.config import configmanager
-
-        if self.preserve_admin_passwd and os.path.exists(self.config_path):
-            shutil.copyfile(self.config_path, self.prev_config_path)
 
         configmanager(self.config_path).save()
 
