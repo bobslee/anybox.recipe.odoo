@@ -115,13 +115,11 @@ class ServerRecipe(BaseRecipe):
 
         configmanager(self.config_path).save()
 
-        if self.preserve_admin_passwd and os.path.exists(self.prev_config_path):
+        if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
             pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
             preserve_admin_passwd = False
 
             with open(self.prev_config_path, 'r') as f:
-                import pdb
-                pdb.set_trace()
                 fdata = f.read()
                 matches = re.findall(pattern_admin_passwd, fdata)
                 if len(matches) == 1:
