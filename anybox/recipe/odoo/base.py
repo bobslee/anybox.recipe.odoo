@@ -265,9 +265,9 @@ class BaseRecipe(object):
         self.preserve_admin_passwd = options.get('preserve_admin_passwd', 'False') == 'True'
         self.prev_config_path  = False
         
-        if self.preserve_admin_passwd:
-            shutil.copyfile(self.config_path, self.prev_config_path)
+        if self.preserve_admin_passwd and os.path.exists(self.config_path):
             self.prev_config_path = '{config_path}.prev'.format(config_path=self.config_path)
+            shutil.copyfile(self.config_path, self.prev_config_path)
         
         for d in self.downloads_dir, self.etc:
             if not os.path.exists(d):
