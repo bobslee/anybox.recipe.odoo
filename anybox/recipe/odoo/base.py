@@ -1176,6 +1176,7 @@ class BaseRecipe(object):
             logger.critical(self.preserve_admin_passwd)
             logger.critical(self.prev_config_path)
             logger.critical(os.path.exists(self.prev_config_path))
+            logger.critical(option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path))
             
             if option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
                 pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
@@ -1189,8 +1190,13 @@ class BaseRecipe(object):
                     else:
                         msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                         raise UserError(msg)
+
+                logger.critical('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+                logger.critical(preserve_admin_passwd)
                 if preserve_admin_passwd:
                     config.set(section, option, preserve_admin_passwd)
+                else:
+                    config.set(section, option, self.options[recipe_option])
             else:
                 config.set(section, option, self.options[recipe_option])
         with open(self.config_path, 'w') as configfile:
