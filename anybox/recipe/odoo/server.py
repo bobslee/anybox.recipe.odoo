@@ -110,8 +110,8 @@ class ServerRecipe(BaseRecipe):
         except ImportError:
             from openerp.tools.config import configmanager
 
-        if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.config_path):
-            shutil.copyfile(self.config_path, self.prev_config_path)
+        # if self.prev_config_path and os.path.exists(self.config_path):
+        #     shutil.copyfile(self.config_path, self.prev_config_path)
 
         configmanager(self.config_path).save()
 
