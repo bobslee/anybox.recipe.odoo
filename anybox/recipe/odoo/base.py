@@ -1168,8 +1168,9 @@ class BaseRecipe(object):
             section, option = recipe_option.split('.', 1)
             conf_ensure_section(config, section)
 
-            import pdb
-            pdb.set_trace()
+            if option == 'admin_passwd':
+                import pdb
+                pdb.set_trace()
             if option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
                 pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
                 preserve_admin_passwd = False
