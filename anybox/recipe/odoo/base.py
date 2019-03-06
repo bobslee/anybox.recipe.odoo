@@ -1184,9 +1184,12 @@ class BaseRecipe(object):
 
                 with open(self.prev_config_path, 'r') as f:
                     fdata = f.read()
+                    logger.critical('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
+                    logger.critical(fdata)
                     matches = re.findall(pattern_admin_passwd, fdata)
+                    logger.critical(matches)
                     if len(matches) == 1:
-                        preserve_admin_pass = matches[0].strip()
+                        preserve_admin_passwd = matches[0].strip()
                     else:
                         msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                         raise UserError(msg)
