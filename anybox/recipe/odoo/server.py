@@ -119,14 +119,15 @@ class ServerRecipe(BaseRecipe):
             pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
             preserve_admin_passwd = False
 
-            # with open(self.prev_config_path, 'r') as f:
-            #     fdata = f.read()
-            #     matches = re.findall(pattern_admin_passwd, fdata)
-            #     if len(matches) == 1:
-            #         preserve_admin_pass = matches[0].strip()
-            #     else:
-            #         msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
-            #         raise UserError(msg)
+            with open(self.prev_config_path, 'r') as f:
+                fdata = f.read()
+                matches = re.findall(pattern_admin_passwd, fdata)
+                if len(matches) == 1:
+                    preserve_admin_pass = matches[0].strip()
+                    return
+                else:
+                    msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
+                    raise UserError(msg)
 
             # if preserve_admin_passwd:
             #     for line in fileinput.input(self.config_path, inplace=True):
