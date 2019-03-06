@@ -259,6 +259,8 @@ class BaseRecipe(object):
         self.etc = self.make_absolute(options.get('etc-directory', 'etc'))
         self.bin_dir = self.buildout['buildout']['bin-directory']
         self.config_path = join(self.etc, self.name + '.cfg')
+
+        self.default_admin_passwd = options.get('default_admin_passwd', '')
         for d in self.downloads_dir, self.etc:
             if not os.path.exists(d):
                 logger.info('Created %s/ directory' % basename(d))
