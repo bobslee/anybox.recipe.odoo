@@ -130,6 +130,8 @@ class ServerRecipe(BaseRecipe):
 
             if preserve_admin_passwd:
                 for line in fileinput.input(self.config_path, inplace=True):
+                    import pdb
+                    pdb.set_trace()
                     if re.match(pattern_admin_passwd, line):
                         replacement = '{preserve_admin_pass}'.format(
                             preserve_admin_pass=preserve_admin_pass
