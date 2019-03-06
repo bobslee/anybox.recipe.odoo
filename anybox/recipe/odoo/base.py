@@ -1168,24 +1168,15 @@ class BaseRecipe(object):
             section, option = recipe_option.split('.', 1)
             conf_ensure_section(config, section)
 
-            # if option == 'admin_passwd':
-            #     import pdb
-            #     pdb.set_trace()
-            logger.critical('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-            logger.critical(option)
-            logger.critical(self.preserve_admin_passwd)
-            logger.critical(self.prev_config_path)
-            logger.critical(os.path.exists(self.prev_config_path))
-            logger.critical(option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path))
-            
-            if option == 'admin_passwd' and self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
+            # If preserve admin_passwd extract from prev_config and write in build config.
+            if option == 'admin_passwd' and self.preserve_admin_passwd and \
+               self.prev_config_path and os.path.exists(self.prev_config_path):
+                # TODO match not a commented admin_passwd. So without a # on line (negate regex).
                 pattern_admin_passwd = re.compile("(admin_passwd\s*=\s*)(\S+)")
                 preserve_admin_passwd = False
 
                 with open(self.prev_config_path, 'r') as f:
                     fdata = f.read()
-                    logger.critical('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
-                    logger.critical(fdata)
                     matches = re.findall(pattern_admin_passwd, fdata)
                     logger.critical(matches)
                     if len(matches) == 1:
@@ -1194,8 +1185,6 @@ class BaseRecipe(object):
                         msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                         raise UserError(msg)
 
-                logger.critical('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-                logger.critical(preserve_admin_passwd)
                 if preserve_admin_passwd:
                     config.set(section, option, preserve_admin_passwd)
                 else:

@@ -2,8 +2,6 @@
 import os
 from os.path import join
 import sys
-import re
-import fileinput
 import shutil
 import logging
 import zc.buildout
@@ -110,32 +108,7 @@ class ServerRecipe(BaseRecipe):
         except ImportError:
             from openerp.tools.config import configmanager
 
-        # if self.prev_config_path and os.path.exists(self.config_path):
-        #     shutil.copyfile(self.config_path, self.prev_config_path)
-
         configmanager(self.config_path).save()
-
-        # if self.preserve_admin_passwd and self.prev_config_path and os.path.exists(self.prev_config_path):
-        #     pattern_admin_passwd = re.compile("admin_passwd\s*=\s*\S+")
-        #     preserve_admin_passwd = False
-
-        #     with open(self.prev_config_path, 'r') as f:
-        #         fdata = f.read()
-        #         matches = re.findall(pattern_admin_passwd, fdata)
-        #         if len(matches) == 1:
-        #             preserve_admin_pass = matches[0].strip()
-        #         else:
-        #             msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
-        #             raise UserError(msg)
-
-        #     if preserve_admin_passwd:
-        #         for line in fileinput.input(self.config_path, inplace=True):
-        #             if re.match(pattern_admin_passwd, line):
-        #                 replacement = '{preserve_admin_pass}'.format(
-        #                     preserve_admin_pass=preserve_admin_pass
-        #                 )
-        #                 line = re.sub(pattern_admin_passwd, replacement, line)
-        #             sys.stdout.write(line)
 
     def _create_gunicorn_conf(self, qualified_name):
         """Put a gunicorn_PART.conf.py script in /etc.
