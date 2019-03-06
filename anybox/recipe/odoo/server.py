@@ -120,6 +120,8 @@ class ServerRecipe(BaseRecipe):
             preserve_admin_passwd = False
 
             with open(self.prev_config_path, 'r') as f:
+                import pdb
+                pdb.set_trace()
                 fdata = f.read()
                 matches = re.findall(pattern_admin_passwd, fdata)
                 if len(matches) == 1:
