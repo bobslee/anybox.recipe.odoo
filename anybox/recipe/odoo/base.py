@@ -263,8 +263,7 @@ class BaseRecipe(object):
         self.default_admin_passwd = options.get('default_admin_passwd', '')
 
         self.preserve_admin_passwd = options.get('preserve_admin_passwd', 'False') == 'True'
-        import pdb
-        pdb.set_trace()
+        self.prev_config_path  = False
         
         if self.preserve_admin_passwd:
             self.prev_config_path = '{config_path}.prev'.format(config_path=self.config_path)
