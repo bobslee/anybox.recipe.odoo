@@ -116,7 +116,7 @@ class ServerRecipe(BaseRecipe):
         configmanager(self.config_path).save()
 
         if self.preserve_admin_passwd and os.path.exists(self.prev_config_path):
-            pattern_admin_passwd = "admin_passwd\s*=\s*\S+)"
+            pattern_admin_passwd = "admin_passwd\s*=\s*\S+"
             preserve_admin_passwd = False
 
             with open(self.prev_config_path, 'r') as f:
