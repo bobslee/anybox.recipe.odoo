@@ -123,21 +123,19 @@ class ServerRecipe(BaseRecipe):
                 fdata = f.read()
                 matches = re.findall(pattern_admin_passwd, fdata)
                 if len(matches) == 1:
-                    import pdb
-                    pdb.set_trace()
-                    preserve_admin_pass = matches[0][1].strip()
+                    preserve_admin_pass = matches[0].strip()
                 else:
                     msg = 'Found {count} matches of admin_passwd'.format(count=len(matches))
                     raise UserError(msg)
 
-            # if preserve_admin_passwd:
-            #     for line in fileinput.input(self.config_path, inplace=True):
-            #         if re.match(pattern_admin_passwd, line):
-            #             replacement = 'admin_passwd = {preserve_admin_pass}'.format(
-            #                 preserve_admin_pass=preserve_admin_pass
-            #             )
-            #             line = re.sub(pattern_admin_passwd, replacement, line)
-            #         sys.stdout.write(line)
+            if preserve_admin_passwd:
+                for line in fileinput.input(self.config_path, inplace=True):
+                    if re.match(pattern_admin_passwd, line):
+                        replacement = '{preserve_admin_pass}'.format(
+                            preserve_admin_pass=preserve_admin_pass
+                        )
+                        line = re.sub(pattern_admin_passwd, replacement, line)
+                    sys.stdout.write(line)
 
     def _create_gunicorn_conf(self, qualified_name):
         """Put a gunicorn_PART.conf.py script in /etc.
