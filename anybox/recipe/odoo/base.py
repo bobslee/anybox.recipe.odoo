@@ -1165,8 +1165,11 @@ class BaseRecipe(object):
             if '.' not in recipe_option:
                 continue
             section, option = recipe_option.split('.', 1)
-            conf_ensure_section(config, section)
-            config.set(section, option, self.options[recipe_option])
+            if self.preserve_admin_passwd and option == 'admin_passwd':
+                continue
+            else:
+                conf_ensure_section(config, section)
+                config.set(section, option, self.options[recipe_option])
         with open(self.config_path, 'w') as configfile:
             config.write(configfile)
 
